@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juno | Your Personal RAG Chatbot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: #000000;
+            color: #FFFFFF;
+            overflow-x: hidden;
+        }
+
+        /* Floating Gradient Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 20%, rgba(13, 37, 63, 0.4) 0%, transparent 40%),
+                        radial-gradient(circle at 80% 70%, rgba(30, 15, 50, 0.4) 0%, transparent 40%);
+            z-index: -1;
+            animation: floatGradient 20s ease-in-out infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes floatGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Button Pulsing Glow Animation */
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #007BFF; }
+            50% { box-shadow: 0 0 10px #fff, 0 0 20px #007BFF, 0 0 30px #007BFF; }
+        }
+        .btn-glow {
+            animation: pulseGlow 4s infinite;
+        }
+
+        /* Text Shimmer Effect */
+        .shimmer-text {
+            background: linear-gradient(90deg, #fff, #fff, #9ca3af, #fff, #fff);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 5s infinite linear;
+        }
+        /* Specific style for the blue full stop */
+        .shimmer-text .blue-dot {
+            -webkit-text-fill-color: #2563eb; /* Blue color */
+            background: none; /* Ensure no gradient interferes */
+        }
+        @keyframes shimmer {
+            0% { background-position: 150% 0; }
+            100% { background-position: -150% 0; }
+        }
+
+        /* Cat Animation Styles */
+        #waiting-cat {
+            width: 150px;
+            margin-top: 2rem; /* Adjusted space above the cat */
+        }
+        #cat-tail {
+            transform-origin: bottom left;
+            animation: wag-tail 3s ease-in-out infinite;
+        }
+        #cat-eye-left, #cat-eye-right {
+            transform-origin: center;
+            animation: blink 5s linear infinite;
+        }
+        #cat-eye-right {
+             animation-delay: 0.2s; /* Make blinks less robotic */
+        }
+
+        @keyframes wag-tail {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-15deg); }
+        }
+        @keyframes blink {
+            0%, 90%, 100% { transform: scaleY(1); }
+            95% { transform: scaleY(0.1); }
+        }
+    </style>
+</head>
+<body class="font-sans">
+
+    <header class="p-4 fixed w-full z-10 bg-black bg-opacity-75 backdrop-blur-sm border-b border-gray-800" data-aos="fade-down">
+        <nav class="container mx-auto flex justify-between items-center">
+            <div class="text-2xl font-bold tracking-wider">Juno</div>
+            <div class="space-x-6">
+                <a href="#features" class="hover:text-gray-400 transition-transform transform hover:-translate-y-0.5 inline-block">Features</a>
+                <a href="#story" class="hover:text-gray-400 transition-transform transform hover:-translate-y-0.5 inline-block">My Story</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="h-screen flex items-center justify-center text-center bg-transparent">
+        <div class="container mx-auto px-4 flex flex-col items-center">
+            
+            <div>
+                <h1 class="text-5xl md:text-7xl font-extrabold mb-4 shimmer-text p-4" data-aos="fade-up">Stop Drowning in Documents<span class="blue-dot">.</span></h1>
+                <p class="text-xl md:text-2xl text-gray-400 mb-8" data-aos="fade-up" data-aos-delay="200">Upload your PDFs and DOCs, and start a conversation with your knowledge.</p>
+                <a href="/app" class="bg-white text-black font-bold py-3 px-8 rounded-md text-lg transition-transform transform hover:scale-105 inline-block btn-glow" data-aos="fade-up" data-aos-delay="400">
+                    Get Started For Free
+                </a>
+            </div>
+
+            <div data-aos="fade-up" data-aos-delay="600">
+                <svg id="waiting-cat" viewBox="0 0 155 125" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path id="cat-tail" d="M1 124C1 124 10.5 61.5 81.5 61.5C152.5 61.5 154 36 154 36" stroke="white" stroke-width="4"/>
+                    <path d="M47.5 73.5C47.5 73.5 35.5 53 58 37.5C80.5 22 84.5 22 84.5 22C84.5 22 83 28 73 37.5C63 47 47.5 73.5 47.5 73.5Z" fill="white"/>
+                    <path d="M107 73.5C107 73.5 119 53 96.5 37.5C74 22 70 22 70 22C70 22 71.5 28 81.5 37.5C91.5 47 107 73.5 107 73.5Z" fill="white"/>
+                    <rect x="23" y="60" width="108" height="58" rx="29" fill="white"/>
+                    <ellipse id="cat-eye-left" cx="54.5" cy="85.5" rx="4.5" ry="7.5" fill="black"/>
+                    <ellipse id="cat-eye-right" cx="99.5" cy="85.5" rx="4.5" ry="7.5" fill="black"/>
+                </svg>
+            </div>
+            
+        </div>
+    </section>
+
+    <section id="features" class="py-20 bg-black border-t border-gray-800">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-2" data-aos="fade-up">Unlock Your Documents' Potential</h2>
+            <p class="text-lg text-gray-400 mb-12" data-aos="fade-up" data-aos-delay="200">Juno transforms static files into dynamic conversation partners.</p>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-gray-900 p-8 rounded-lg border border-gray-800 transition-transform transform hover:-translate-y-2" data-aos="fade-right">
+                    <div class="text-4xl mb-4">📚</div>
+                    <h3 class="text-2xl font-bold mb-2">Centralized Knowledge</h3>
+                    <p class="text-gray-400">Combine multiple documents—PDFs, DOCX, HTML—into a single, searchable knowledge base.</p>
+                </div>
+                <div class="bg-gray-900 p-8 rounded-lg border border-gray-800 transition-transform transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-4xl mb-4">💬</div>
+                    <h3 class="text-2xl font-bold mb-2">Conversational Queries</h3>
+                    <p class="text-gray-400">Ask questions in natural language and get precise, context-aware answers instantly.</p>
+                </div>
+                <div class="bg-gray-900 p-8 rounded-lg border border-gray-800 transition-transform transform hover:-translate-y-2" data-aos="fade-left" data-aos-delay="400">
+                    <div class="text-4xl mb-4">⚡️</div>
+                    <h3 class="text-2xl font-bold mb-2">Powered by AI</h3>
+                    <p class="text-gray-400">Leverages powerful models like Llama 3.1 and Mixtral for state-of-the-art understanding.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="story" class="py-20 bg-black border-t border-gray-800 overflow-hidden">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center gap-12">
+            <div class="md:w-1/2 text-center md:text-left" data-aos="fade-right">
+                <p class="text-sm uppercase text-gray-500">A Note from the Creator</p>
+                <h2 class="text-4xl font-bold mb-4">Why Juno?</h2>
+                <p class="text-gray-400 leading-relaxed mb-4">
+                    "Hi, I’m Atharva Chalikwar. During my studies, I constantly felt overwhelmed. I had dozens of research papers, lecture notes, and textbook chapters scattered across countless PDF files. Finding a specific piece of information meant opening file after file, using Ctrl+F, and wasting hours."
+                </p>
+                <p class="text-gray-400 leading-relaxed mb-4">
+                    "I knew there had to be a better way. I imagined a tool where I could just 'talk' to my documents ask a question and get an answer synthesized from all my materials. That idea became Juno. I built it to solve your own problem, and I hope it can solve yours too."
+                </p>
+                <a href="/app" class="bg-white text-black font-bold py-3 px-8 rounded-md text-lg transition-transform transform hover:scale-105 inline-block mt-4 btn-glow">
+                    Try It Now
+                </a>
+            </div>
+            <div class="md:w-1/2 flex justify-center" data-aos="fade-left" data-aos-delay="200">
+                <!-- <div class="w-64 h-64 rounded-full bg-black border-2 border-gray-700 flex items-center justify-center overflow-hidden transition-transform transform hover:scale-105">
+                   <img src="/static/img/prasannajeet.jpg" alt="Prasannajeet Ojha" class="w-full h-full object-cover" />
+                </div> -->
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-8 bg-black border-t border-gray-800 text-center text-gray-500">
+        <p>&copy; 2025 Juno. Created by Atharva Chalikwar.</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800, // Animation duration
+            once: true,    // Whether animation should happen only once
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juno | Chat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: #000000;
+            color: #FFFFFF;
+            overflow: hidden; /* Prevent scrollbars on the main body */
+        }
+
+        /* Floating Gradient Background from landing page */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 20%, rgba(13, 37, 63, 0.4) 0%, transparent 40%),
+                        radial-gradient(circle at 80% 70%, rgba(30, 15, 50, 0.4) 0%, transparent 40%);
+            z-index: -1;
+            animation: floatGradient 20s ease-in-out infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes floatGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Custom scrollbar for chat box */
+        #chat-box::-webkit-scrollbar, #document-list::-webkit-scrollbar { width: 8px; }
+        #chat-box::-webkit-scrollbar-track, #document-list::-webkit-scrollbar-track { background: transparent; }
+        #chat-box::-webkit-scrollbar-thumb, #document-list::-webkit-scrollbar-thumb { background: #4a4a4a; border-radius: 4px; }
+        #chat-box::-webkit-scrollbar-thumb:hover, #document-list::-webkit-scrollbar-thumb:hover { background: #6a6a6a; }
+
+        /* Theming for chat messages */
+        .message.user .text-content { background-color: #2563eb; } /* Blue for user */
+        .message.assistant .text-content { background-color: #374151; } /* Gray for AI */
+
+    </style>
+</head>
+<body class="bg-black text-white font-sans flex h-screen">
+
+    <aside class="w-80 p-6 flex flex-col justify-between border-r border-gray-800 bg-black bg-opacity-50 backdrop-blur-md">
+        <div>
+            <h1 class="text-2xl font-bold tracking-wider mb-8">Juno</h1>
+            
+            <div class="mb-6">
+                <label for="model-select" class="block text-sm font-medium text-gray-400 mb-2">Select Model</label>
+                <select id="model-select" class="w-full bg-gray-800 border border-gray-700 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+                    <option value="gemini-2.0-pro">Gemini 2.0 Pro</option>
+                    <option value="gemini-2.0-flash-exp">Gemini 2.0 Flash Exp</option>
+                </select>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-lg font-semibold mb-3">Document Management</h2>
+                <label for="file-upload" class="w-full bg-white hover:bg-gray-300 text-black font-bold py-2 px-4 rounded-md cursor-pointer text-center block transition-colors">
+                    <i class="fas fa-upload mr-2"></i>Upload Document
+                </label>
+                <input type="file" id="file-upload" class="hidden" accept=".pdf,.docx,.html,.txt,.csv">
+            </div>
+
+            <div>
+                <h2 class="text-lg font-semibold mb-3">Uploaded Documents</h2>
+                <div id="document-list" class="space-y-2 max-h-80 overflow-y-auto pr-2">
+                    </div>
+            </div>
+        </div>
+         <a href="/" class="text-gray-400 hover:text-white transition-colors text-sm"><i class="fas fa-arrow-left mr-2"></i>Back to Home</a>
+    </aside>
+
+    <main class="flex-1 flex flex-col p-6 bg-transparent">
+        <div class="flex-1 overflow-y-auto mb-4 pr-2" id="chat-box">
+            </div>
+        
+        <form id="chat-form" class="flex items-center">
+            <input type="text" id="chat-input" class="flex-1 bg-gray-800 border border-gray-700 rounded-l-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ask Juno a question about your documents...">
+            <button type="submit" class="bg-white hover:bg-gray-300 text-black font-bold px-6 py-3 rounded-r-md transition-colors">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </form>
+    </main>
+    
+    <script src="/static/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+python-dotenv
+langchain
+langchain-google-genai
+google-generativeai
+chromadb
+langchain-community
+sentence-transformers
+pypdf
+python-docx
+pydantic
+requests
