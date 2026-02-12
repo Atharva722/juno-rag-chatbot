@@ -1,4 +1,4 @@
-1. Navigate to Project Directory: cd c:\Users\athar\Downloads\juno-main\juno-main
+1. Navigate to Project Directory.
 2. Activate Virtual Environment: .\venv\Scripts\Activate.ps1
 3. Set Up Your Gemini API Key
 4. Start the Server: .\venv\Scripts\python.exe main_simple.py
